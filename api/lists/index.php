@@ -32,6 +32,12 @@ switch ((isset($_GET['action'])) ? $_GET['action'] : false) {
             if (isset($list['id'])) {
                 $stmt = $conn->prepare("UPDATE lists SET title=:title WHERE id=:id");
                 $stmt->bindParam(':id', $list['id']);
+                if ($list['id'] == 1) {
+                    $result = "Inbox can't be edit!";
+                    header('Content-Type: application/json');
+                    echo json_encode($result);
+                    return false;
+                }
             } else {
                 $stmt = $conn->prepare("INSERT INTO lists SET title=:title");
             }

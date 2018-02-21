@@ -23,6 +23,32 @@ function json(response) {
     return response.json()
 }
 
+function editTask(id, event) {
+    let title = event.target.parentNode.firstChild.nodeValue;
+    let list = currentList;
+
+    title = prompt("Please enter a title", title);
+
+    let data = [{
+        id: id,
+        title: title,
+        done: false,
+        list: list
+    }];
+
+    fetch('api/tasks/?action=insert&list=' + list, {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+        .then(status)
+        .then(json)
+        .then(function(data) {
+            getAllTasks(currentList)
+        }).catch(function(error) {
+        console.log('Request failed', error);
+    });
+}
+
 function addTask() {
     let list = currentList;
 
@@ -135,6 +161,35 @@ function addList() {
         .then(function(data) {
             getAllLists();
             getAllTasks(currentList)
+        }).catch(function(error) {
+        console.log('Request failed', error);
+    });
+}
+
+function editList(id, event) {
+    if (id === 1) {
+        alert("Inbox can't be edit!");
+        return false;
+    }
+
+    let title = event.target.parentNode.firstChild.nodeValue;
+    let list = currentList;
+
+    title = prompt("Please enter a title", title);
+
+    let data = [{
+        id: id,
+        title: title
+    }];
+
+    fetch('api/lists/?action=insert', {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+        .then(status)
+        .then(json)
+        .then(function(data) {
+            getAllLists()
         }).catch(function(error) {
         console.log('Request failed', error);
     });
