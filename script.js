@@ -39,7 +39,7 @@ function addTask() {
         .then(status)
         .then(json)
         .then(function(data) {
-            getAllTasks()
+            getAllTasks(currentList)
         }).catch(function(error) {
         console.log('Request failed', error);
     });
@@ -51,9 +51,8 @@ function getAllTasks(list) {
         .then(status)
         .then(json)
         .then(function(data) {
-            let list = document.getElementById('list');
-
-            list.innerHTML = templates.tasks(data);
+            let task = document.getElementById('task');
+            task.innerHTML = templates.tasks(data);
         }).catch(function(error) {
         console.error('Request failed', error);
     });
@@ -70,7 +69,72 @@ function removeTask(id) {
         .then(status)
         .then(json)
         .then(function(data) {
-            getAllTasks()
+            getAllTasks(currentList)
+        }).catch(function(error) {
+        console.log('Request failed', error);
+    });
+}
+
+function getAllLists() {
+    fetch('api/lists/?action=index')
+        .then(status)
+        .then(json)
+        .then(function(data) {
+            let list = document.getElementById('list');
+
+            list.innerHTML = templates.lists(data);
+        }).catch(function(error) {
+        console.error('Request failed', error);
+    });
+}
+
+function ChangeList(id) {
+    currentList = Number(id);
+    getAllTasks(currentList);
+}
+
+function removeList(id) {
+    if (id === 1) {
+        alert("Inbox can't be removed!");
+        return false;
+    }
+
+    console.log(id);
+
+    let data = [{
+        id: id
+    }];
+    fetch('api/lists/?action=delete', {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+        .then(status)
+        .then(json)
+        .then(function(data) {
+            currentList = 1;
+            getAllLists();
+            getAllTasks(currentList)
+        }).catch(function(error) {
+        console.log('Request failed', error);
+    });
+}
+
+function addList() {
+    let list = currentList;
+
+    let data = [{
+        title: document.getElementsByName('listTitle')[0].value,
+    }];
+
+    fetch('api/lists/?action=insert&list=' + list, {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+        .then(status)
+        .then(json)
+        .then(function(data) {
+            getAllLists();
+            getAllTasks(currentList)
         }).catch(function(error) {
         console.log('Request failed', error);
     });
@@ -80,5 +144,6 @@ window.onload = () => {
     let main = document.getElementsByTagName('main')[0];
     main.innerHTML = templates.index();
 
+    getAllLists();
     getAllTasks(currentList);
 };

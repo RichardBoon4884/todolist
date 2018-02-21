@@ -1,27 +1,25 @@
 let templates = {
     index: () => {
-      return "<section id='taskForm'><input name='taskTitle' type='text'><button type='button' onclick='addTask()'>Add task</button></section><section id='list'></section><section id='task'></section>";
+      return "<section id='taskForm'></section><section id='list'></section><section id='task'></section><input name='taskTitle' type='text'><button type='button' onclick='addTask()'>Add task</button>";
     },
     tasks: (tasks) => {
         let resultHtml = "";
 
         tasks.forEach((task) => {
 
-            resultHtml += "<li>" + task.title + "<button type='button' onclick='removeTask(" + task.id + ")'>x</button></li>"
+            resultHtml += "<li>" + task.title + "<button type='button' onclick='removeTask(" + task.id + ")'>Remove</button></li>"
         });
 
         return "<header><h2>Tasks</h2></header><ul>" + resultHtml + "</ul>"
     },
     lists: (lists) => {
-        let resultHtmlLi = "";
-        let resultHtmlOption = "";
+        let resultHtml = "";
 
         lists.forEach((list) => {
 
-            resultHtmlLi += "<li>" + list.title + "</li>";
-            resultHtmlOption += "<option value='" + list.id + "'>" + list.title + "</option>";
+            resultHtml += "<li>" + list.title + "<button type='button' onclick='ChangeList(" + list.id + ")'>Change list</button><button type='button' onclick='removeList(" + list.id + ")'>Remove</button></li>";
         });
 
-        return "<header><h2>Lists</h2></header><select>" + resultHtmlOption + "</select>"
+        return "<header><h2>Lists</h2><input name='listTitle' type='text'><button type='button' onclick='addList()'>Add list</button></header><ul>" + resultHtml + "</ul>"
     }
 };

@@ -22,10 +22,6 @@ switch ((isset($_GET['action'])) ? $_GET['action'] : false) {
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $results = $stmt->fetchAll();
 
-        foreach ($results as $key => $result) {
-            $results[$key]['done'] = ($result['done'] == 1) ? true : false;
-        }
-
         header('Content-Type: application/json');
         echo json_encode($results);
         break;
@@ -51,6 +47,13 @@ switch ((isset($_GET['action'])) ? $_GET['action'] : false) {
         $lists = json_decode(file_get_contents('php://input'), true);
 
         foreach ($lists as $list) {
+            if ($list['id'] == 1) {
+                $result = "Inbox can't be removed!";
+                header('Content-Type: application/json');
+                echo json_encode($result);
+                return false;
+            }
+
             $stmt = $conn->prepare("DELETE FROM lists WHERE id=:id");
             $stmt->bindParam(':id', $list['id']);
             $stmt->execute();
