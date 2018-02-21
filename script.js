@@ -65,7 +65,8 @@ function addTask() {
         .then(status)
         .then(json)
         .then(function(data) {
-            getAllTasks(currentList)
+            getAllTasks(currentList);
+            document.getElementsByName('taskTitle')[0].value = "";
         }).catch(function(error) {
         console.log('Request failed', error);
     });
@@ -160,7 +161,8 @@ function addList() {
         .then(json)
         .then(function(data) {
             getAllLists();
-            getAllTasks(currentList)
+            getAllTasks(currentList);
+            document.getElementsByName('listTitle')[0].value = "";
         }).catch(function(error) {
         console.log('Request failed', error);
     });
@@ -176,6 +178,9 @@ function editList(id, event) {
     let list = currentList;
 
     title = prompt("Please enter a title", title);
+    if (title === null) {
+        return false;
+    }
 
     let data = [{
         id: id,
@@ -189,7 +194,8 @@ function editList(id, event) {
         .then(status)
         .then(json)
         .then(function(data) {
-            getAllLists()
+            getAllLists();
+            ChangeList(id);
         }).catch(function(error) {
         console.log('Request failed', error);
     });
