@@ -10,7 +10,7 @@ let templates = {
             resultHtml += "<li>" + task.title + "<button type='button' onclick='editTask(" + task.id + ", event)'>Edit</button><button type='button' onclick='removeTask(" + task.id + ")'>Remove</button></li>"
         });
 
-        return "<header><h2>Tasks</h2></header><ul>" + resultHtml + "</ul>"
+        return "<header><h2>Tasks in this list</h2></header><ul>" + resultHtml + "</ul>"
     },
     lists: (lists) => {
         let resultHtml = "";
