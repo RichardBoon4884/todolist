@@ -7,6 +7,12 @@
     scriptTemplate.src = "template.js";
     headScript.insertBefore(scriptTemplate, headScript.childNodes[3]);
     headScript.parentNode.insertBefore(scriptTemplate, headScript.nextSibling);
+
+    let scriptEventListners = document.createElement('script');
+    scriptEventListners.type = "text/javascript";
+    scriptEventListners.src = "eventListeners.js";
+    headScript.insertBefore(scriptEventListners, headScript.childNodes[3]);
+    headScript.parentNode.insertBefore(scriptEventListners, headScript.nextSibling);
 })(); // Initializing
 
 // Active list
@@ -28,7 +34,7 @@ function json(response) {
 
 // Change a specific task
 function editTask(id, event) {
-    let title = event.target.parentNode.firstChild.nodeValue; // Getting the title of the task
+    let title = event.parentNode.firstChild.nodeValue; // Getting the title of the task
     let list = currentList;
 
     title = prompt("Please enter a title", title);
@@ -85,6 +91,7 @@ function getAllTasks(list) {
         .then(function(data) {
             let task = document.getElementById('task');
             task.innerHTML = templates.tasks(data);
+            eventListeners.addTasks();
         }).catch(function(error) {
         console.error('Request failed', error);
     });
@@ -117,6 +124,7 @@ function getAllLists() {
             let list = document.getElementById('list');
 
             list.innerHTML = templates.lists(data);
+            eventListeners.addLists();
         }).catch(function(error) {
         console.error('Request failed', error);
     });
@@ -185,7 +193,7 @@ function editList(id, event) {
         return false;
     }
 
-    let title = event.target.parentNode.firstChild.nodeValue; // Getting the title of the list
+    let title = event.parentNode.firstChild.nodeValue; // Getting the title of the list
     let list = currentList;
 
     title = prompt("Please enter a title", title);
