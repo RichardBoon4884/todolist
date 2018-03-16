@@ -18,7 +18,7 @@ let templates = {
 
         lists.forEach((list) => {
 
-            resultHtml += "<tr><td>" + list.title + "</td><td><button type='button' id='" + list.id + "' class='changeListButton'>Change list</button></td><td><button type='button' id='" + list.id + "' class='editListButton'>Edit</button></td><td><button type='button' id='" + list.id + "' class='removeListButton'>Remove</button></td></tr>";
+            resultHtml += "<tr><td><a style='cursor: pointer; text-decoration: underline;' id='" + list.id + "' class='changeListButton'>" + list.title + "</a></td><td><button type='button' id='" + list.id + "' class='editListButton'>Edit</button></td><td><button type='button' id='" + list.id + "' class='removeListButton'>Remove</button></td></tr>";
         });
 
         return "<header><h2>Lists</h2><input name='listTitle' type='text'><button type='button'  class='addListButton'>Add list</button></header><table>" + resultHtml + "</table>"
