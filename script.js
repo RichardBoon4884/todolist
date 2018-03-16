@@ -7,10 +7,12 @@
     scriptTemplate.src = "template.js";
     headScript.insertBefore(scriptTemplate, headScript.childNodes[3]);
     headScript.parentNode.insertBefore(scriptTemplate, headScript.nextSibling);
-})(); // Initializings
+})(); // Initializing
 
+// Active list
 let currentList = 1;
 
+// Checks the status for the promise
 function status(response) {
     if (response.status >= 200 && response.status < 300) {
         return Promise.resolve(response)
@@ -19,12 +21,14 @@ function status(response) {
     }
 }
 
+// Get the JSON respond for the promise
 function json(response) {
     return response.json()
 }
 
+// Change a specific task
 function editTask(id, event) {
-    let title = event.target.parentNode.firstChild.nodeValue;
+    let title = event.target.parentNode.firstChild.nodeValue; // Getting the title of the task
     let list = currentList;
 
     title = prompt("Please enter a title", title);
@@ -49,6 +53,7 @@ function editTask(id, event) {
     });
 }
 
+// Adds a task to the current selected list
 function addTask() {
     let list = currentList;
 
@@ -70,9 +75,9 @@ function addTask() {
         }).catch(function(error) {
         console.log('Request failed', error);
     });
-
 }
 
+// Get all the tasks from the current list
 function getAllTasks(list) {
     fetch('api/tasks/?action=index&list=' + list)
         .then(status)
@@ -85,6 +90,7 @@ function getAllTasks(list) {
     });
 }
 
+// Remove a specific task
 function removeTask(id) {
     let data = [{
         id: id
@@ -102,6 +108,7 @@ function removeTask(id) {
     });
 }
 
+// Get all lists
 function getAllLists() {
     fetch('api/lists/?action=index')
         .then(status)
@@ -115,11 +122,13 @@ function getAllLists() {
     });
 }
 
-function ChangeList(id) {
+// Change active list
+function changeList(id) {
     currentList = Number(id);
     getAllTasks(currentList);
 }
 
+// Remove list
 function removeList(id) {
     if (id === 1) {
         alert("Inbox can't be removed!");
@@ -146,6 +155,7 @@ function removeList(id) {
     });
 }
 
+// Add a new list
 function addList() {
     let list = currentList;
 
@@ -168,13 +178,14 @@ function addList() {
     });
 }
 
+// Edit list a specif list
 function editList(id, event) {
     if (id === 1) {
         alert("Inbox can't be edit!");
         return false;
     }
 
-    let title = event.target.parentNode.firstChild.nodeValue;
+    let title = event.target.parentNode.firstChild.nodeValue; // Getting the title of the list
     let list = currentList;
 
     title = prompt("Please enter a title", title);
