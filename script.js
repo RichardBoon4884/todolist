@@ -141,7 +141,7 @@ function changeList(id) {
 
 // Remove list
 function removeList(id) {
-    if (id === 1) {
+    if (id == 1) {
         alert("Inbox can't be removed!");
         return false;
     }
@@ -191,7 +191,7 @@ function addList() {
 
 // Edit list a specif list
 function editList(id, event) {
-    if (id === 1) {
+    if (id == 1) {
         alert("Inbox can't be edit!");
         return false;
     }
