@@ -7,20 +7,20 @@ let templates = {
 
         tasks.forEach((task) => {
 
-            resultHtml += "<li>" + task.title + "<button type='button' id='" + task.id + "' class='editTaskButton'>Edit</button><button type='button' id='" + task.id + "' class='removeTaskButton'>Remove</button></li>"
+            resultHtml += "<tr><td>" + task.title + "</td><td><button type='button' id='" + task.id + "' class='editTaskButton'>Edit</button></td><td><button type='button' id='" + task.id + "' class='removeTaskButton'>Remove</button></td></tr>"
         });
 
-        return "<header><h2>Tasks in this list</h2></header><ul>" + resultHtml + "</ul>"
+        return "<header><h2>Tasks in this list</h2></header><table>" + resultHtml + "</table>"
     },
     lists: (lists) => {
         let resultHtml = "";
 
         lists.forEach((list) => {
 
-            resultHtml += "<li>" + list.title + "<button type='button' id='" + list.id + "' class='changeListButton'>Change list</button><button type='button' id='" + list.id + "' class='editListButton'>Edit</button><button type='button' id='" + list.id + "' class='removeListButton'>Remove</button></li>";
+            resultHtml += "<tr><td>" + list.title + "</td><td><button type='button' id='" + list.id + "' class='changeListButton'>Change list</button></td><td><button type='button' id='" + list.id + "' class='editListButton'>Edit</button></td><td><button type='button' id='" + list.id + "' class='removeListButton'>Remove</button></td></tr>";
         });
 
-        return "<header><h2>Lists</h2><input name='listTitle' type='text'><button type='button'  class='addListButton'>Add list</button></header><ul>" + resultHtml + "</ul>"
+        return "<header><h2>Lists</h2><input name='listTitle' type='text'><button type='button'  class='addListButton'>Add list</button></header><table>" + resultHtml + "</table>"
     }
 };
 
