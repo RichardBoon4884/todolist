@@ -6,8 +6,9 @@ let templates = {
         let resultHtml = "";
 
         tasks.forEach((task) => {
+            let checked = task.done === true ? 'checked' : '';
 
-            resultHtml += "<tr><td>" + task.title + "</td><td><button type='button' id='" + task.id + "' class='editTaskButton'>Edit</button></td><td><button type='button' id='" + task.id + "' class='removeTaskButton'>Remove</button></td></tr>"
+            resultHtml += "<tr><td><input type='checkbox' name='status' id='statusCheckbox-" + task.id + "' class='statusCheckbox'" + checked + "></td><td>" + task.title + "</td><td><button type='button' id='" + task.id + "' class='editTaskButton'>Edit</button></td><td><button type='button' id='" + task.id + "' class='removeTaskButton'>Remove</button></td></tr>"
         });
 
         return "<header><h2>Tasks in this list</h2></header><table>" + resultHtml + "</table>"

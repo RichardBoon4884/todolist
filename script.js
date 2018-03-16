@@ -34,15 +34,18 @@ function json(response) {
 
 // Change a specific task
 function editTask(id, event) {
-    let title = event.parentNode.firstChild.nodeValue; // Getting the title of the task
+    let title = event.parentNode.parentNode.childNodes[1].innerText; // Getting the title of the task
+    let done = document.getElementById("statusCheckbox-" + id).checked;
     let list = currentList;
 
-    title = prompt("Please enter a title", title);
+    if (event.className === "editTaskButton") {
+        title = prompt("Please enter a title", title);
+    }
 
     let data = [{
         id: id,
         title: title,
-        done: false,
+        done: done,
         list: list
     }];
 

@@ -29,5 +29,10 @@ let eventListeners = {
         Array.prototype.forEach.call(document.getElementsByClassName("removeTaskButton"), (element) => {
             element.addEventListener("click", function(){ removeTask(element.id); });
         });
+        // For status checkboxes
+        Array.prototype.forEach.call(document.getElementsByClassName("statusCheckbox"), (element) => {
+            let id = element.id.split("-")[1]; // Get the id number of a string
+            element.addEventListener("click", function(){ editTask(id, element);});
+        });
     }
 };
