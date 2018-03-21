@@ -20,7 +20,8 @@ let currentList = 1;
 let options = {filter: false, sort: false}; // Keep track if filtering and sorting is enabled
 
 // Checks the status for the promise
-function status(response) {
+function status(response)
+{
     if (response.status >= 200 && response.status < 300) {
         return Promise.resolve(response)
     } else {
@@ -29,17 +30,19 @@ function status(response) {
 }
 
 // Get the JSON respond for the promise
-function json(response) {
+function json(response)
+{
     return response.json()
 }
 
 // Change a specific task
-function editTask(id, event) {
+function editTask(id, event)
+{
     let title = event.parentNode.parentNode.childNodes[1].innerText; // Getting the title of the task
-    let done = document.getElementById("statusCheckbox-" + id).checked;
+    let done = document.getElementById("statusCheckbox-" + id).checked; // Getting if the task is finished
     let list = currentList;
 
-    if (event.className === "editTaskButton") {
+    if (event.className === "editTaskButton") { // Check if the edit name button is clicked
         title = prompt("Please enter a title", title);
     }
 
@@ -50,6 +53,7 @@ function editTask(id, event) {
         list: list
     }];
 
+    // Send the data to the server
     fetch('api/tasks/?action=insert&list=' + list, {
         method: "POST",
         body: JSON.stringify(data)
@@ -64,7 +68,8 @@ function editTask(id, event) {
 }
 
 // Adds a task to the current selected list
-function addTask() {
+function addTask()
+{
     let list = currentList;
 
     let data = [{
@@ -73,6 +78,7 @@ function addTask() {
         list: list
     }];
 
+    // Send the data to the server
     fetch('api/tasks/?action=insert&list=' + list, {
         method: "POST",
         body: JSON.stringify(data)
@@ -102,13 +108,16 @@ function sort(a, b)
 }
 
 // Get all the tasks from the current list
-function getAllTasks(list, optionsParam = null) {
+function getAllTasks(list, optionsParam = null)
+{
+    // Getting the data from the server
     fetch('api/tasks/?action=index&list=' + list)
         .then(status)
         .then(json)
         .then(function(data) {
             let task = document.getElementById('task');
 
+            // Check if filter or sort is enabled
             if (optionsParam != null) {
                 options = optionsParam;
             }
@@ -127,10 +136,13 @@ function getAllTasks(list, optionsParam = null) {
 }
 
 // Remove a specific task
-function removeTask(id) {
+function removeTask(id)
+{
     let data = [{
         id: id
     }];
+
+    // Send the data to the server
     fetch('api/tasks/?action=delete', {
         method: "POST",
         body: JSON.stringify(data)
@@ -145,7 +157,9 @@ function removeTask(id) {
 }
 
 // Get all lists
-function getAllLists() {
+function getAllLists()
+{
+    // Getting the data from the server
     fetch('api/lists/?action=index')
         .then(status)
         .then(json)
@@ -160,23 +174,25 @@ function getAllLists() {
 }
 
 // Change active list
-function changeList(id) {
+function changeList(id)
+{
     currentList = Number(id);
     getAllTasks(currentList);
 }
 
 // Remove list
-function removeList(id) {
+function removeList(id)
+{
     if (id == 1) {
         alert("Inbox can't be removed!");
         return false;
     }
 
-    console.log(id);
-
     let data = [{
         id: id
     }];
+
+    // Send the data to the server
     fetch('api/lists/?action=delete', {
         method: "POST",
         body: JSON.stringify(data)
@@ -193,13 +209,15 @@ function removeList(id) {
 }
 
 // Add a new list
-function addList() {
+function addList()
+{
     let list = currentList;
 
     let data = [{
         title: document.getElementsByName('listTitle')[0].value,
     }];
 
+    // Send the data to the server
     fetch('api/lists/?action=insert&list=' + list, {
         method: "POST",
         body: JSON.stringify(data)
@@ -216,13 +234,14 @@ function addList() {
 }
 
 // Edit list a specif list
-function editList(id, event) {
+function editList(id, event)
+{
     if (id == 1) {
         alert("Inbox can't be edit!");
         return false;
     }
 
-    let title = event.parentNode.firstChild.nodeValue; // Getting the title of the list
+    let title = event.parentNode.parentNode.childNodes[0].innerText; // Getting the title of the list
     let list = currentList;
 
     title = prompt("Please enter a title", title);
@@ -235,6 +254,7 @@ function editList(id, event) {
         title: title
     }];
 
+    // Send the data to the server
     fetch('api/lists/?action=insert', {
         method: "POST",
         body: JSON.stringify(data)
@@ -247,10 +267,6 @@ function editList(id, event) {
         }).catch(function(error) {
         console.log('Request failed', error);
     });
-}
-
-function filterTasksOnStatus() {
-
 }
 
 window.onload = () => {
