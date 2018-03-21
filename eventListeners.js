@@ -20,6 +20,18 @@ let eventListeners = {
     addTasks: () => {
         // For add list button
         document.getElementsByClassName("addTaskButton")[0].addEventListener("click", addTask);
+        // For filter button
+        document.getElementsByClassName("taskFilterButton")[0].addEventListener("click", (element) => {
+            getAllTasks(currentList, {filter: true, sort: false})
+        });
+        // For filter button
+        document.getElementsByClassName("taskSortButton")[0].addEventListener("click", (element) => {
+            getAllTasks(currentList, {filter: false, sort: true})
+        });
+        // For normal view button
+        document.getElementsByClassName("taskNormalViewButton")[0].addEventListener("click", (element) => {
+            getAllTasks(currentList, {filter: false, sort: false})
+        });
 
         // For edit list buttons
         Array.prototype.forEach.call(document.getElementsByClassName("editTaskButton"), (element) => {

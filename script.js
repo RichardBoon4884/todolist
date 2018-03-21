@@ -17,6 +17,7 @@
 
 // Active list
 let currentList = 1;
+let options = {filter: false, sort: false}; // Keep track if filtering and sorting is enabled
 
 // Checks the status for the promise
 function status(response) {
@@ -86,13 +87,38 @@ function addTask() {
     });
 }
 
+// Filter for finished tasks
+function filter(a)
+{
+    return a.done === true;
+}
+
+// Sort for finished tasks
+function sort(a, b)
+{
+    if (a.done !== true)
+        return 1;
+    return 0;
+}
+
 // Get all the tasks from the current list
-function getAllTasks(list) {
+function getAllTasks(list, optionsParam = null) {
     fetch('api/tasks/?action=index&list=' + list)
         .then(status)
         .then(json)
         .then(function(data) {
             let task = document.getElementById('task');
+
+            if (optionsParam != null) {
+                options = optionsParam;
+            }
+
+            if (options.filter === true) {
+                data = data.filter(filter);
+            } else if (options.sort === true) {
+                data = data.sort(sort);
+            }
+
             task.innerHTML = templates.tasks(data);
             eventListeners.addTasks();
         }).catch(function(error) {
@@ -221,6 +247,10 @@ function editList(id, event) {
         }).catch(function(error) {
         console.log('Request failed', error);
     });
+}
+
+function filterTasksOnStatus() {
+
 }
 
 window.onload = () => {
