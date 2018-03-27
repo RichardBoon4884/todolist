@@ -6,15 +6,18 @@ let eventListeners = {
 
         // For change list buttons
         Array.prototype.forEach.call(document.getElementsByClassName("changeListButton"), (element) => {
-            element.addEventListener("click", function(){ changeList(element.id); });
+            let id = element.id.split("-")[1]; // Get the id number of a string
+            element.addEventListener("click", function(){ changeList(id); });
         });
         // For edit list buttons
         Array.prototype.forEach.call(document.getElementsByClassName("editListButton"), (element) => {
-            element.addEventListener("click", function(){ editList(element.id, element); });
+            let id = element.id.split("-")[1]; // Get the id number of a string
+            element.addEventListener("click", function(){ editList(id, element); });
         });
         // For remove buttons
         Array.prototype.forEach.call(document.getElementsByClassName("removeListButton"), (element) => {
-            element.addEventListener("click", function(){ removeList(element.id); });
+            let id = element.id.split("-")[1]; // Get the id number of a string
+            element.addEventListener("click", function(){ removeList(id); });
         });
     },
     addTasks: () => {
@@ -35,11 +38,13 @@ let eventListeners = {
 
         // For edit list buttons
         Array.prototype.forEach.call(document.getElementsByClassName("editTaskButton"), (element) => {
-            element.addEventListener("click", function(){ editTask(element.id, element); });
+            let id = element.id.split("-")[1]; // Get the id number of a string
+            element.addEventListener("click", function(){ editTask(id, element); });
         });
         // For remove buttons
         Array.prototype.forEach.call(document.getElementsByClassName("removeTaskButton"), (element) => {
-            element.addEventListener("click", function(){ removeTask(element.id); });
+            let id = element.id.split("-")[1]; // Get the id number of a string
+            element.addEventListener("click", function(){ removeTask(id); });
         });
         // For status checkboxes
         Array.prototype.forEach.call(document.getElementsByClassName("statusCheckbox"), (element) => {
